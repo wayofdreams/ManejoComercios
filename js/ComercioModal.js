@@ -1,38 +1,33 @@
-/*
-{
-    "Codigo": {
-        "nombre": string,
-        "codigo": string,
-        "descripcion": string,
-        "ubicacion": {
-            "lat": int,
-            "lng": int
-        }
-    }
-}
-*/
-var comercios = {};
+var tempLat = undefined;
+var tempLng = undefined;
 
-//nombre, codigo y ubicacion son requeridos
-//ubicacion debe tener como atributos lat y lng
-function addComercio(nombre, codigo, descripcion, ubicacion) {
+function saveComercio(){
+    var nombre = document.getElementById("inputNombre").value;
+    var codigo = document.getElementById("inputCodigo").value;
+    var descripcion = document.getElementById("inputDescripcion").value;
     
-    if (nombre !== undefined && codigo !== undefined && ubicacion !== undefined && ubicacion.lat !== undefined && ubicacion.lng !== undefined) {
-        var comercio = {
-        "nombre": nombre,
-        "codigo": codigo,
-        "descripcion": descripcion,
-        "ubicacion": ubicacion
-        };
-        
-        comercios[codigo] = comercio;
+    var ubicacion = {};
+    ubicacion["lat"] = tempLat;
+    ubicacion["lng"] = tempLng;
+    
+    addComercio(nombre, codigo, descripcion, ubicacion);
+    
+    tempLat = undefined;
+    tempLng = undefined;
+    document.getElementById("inputNombre").value= "";
+    document.getElementById("inputCodigo").value= "";
+    document.getElementById("inputDescripcion").value= "";
+    document.getElementById("latLng").innerHTML = "";
+}
+
+function populateModal(codigo){
+    comercio = getComercios()[codigo];
+    if(comercio !== undefined){
+        document.getElementById("inputNombre").value= comercio.nombre;
+        document.getElementById("inputCodigo").value= comercio.codigo;
+        document.getElementById("inputDescripcion").value= comercio.descripcion;
+        tempLat = comercio.ubicacion.lat;
+        tempLng = comercio.ubicacion.lng;
+        document.getElementById("latLng").innerHTML = "Ubicacion: lat: " + tempLat + " lng: " + tempLng;
     }
-}
-
-function getComercios(){
-    return comercios;
-}
-
-function deleteComercio(codigo){
-    delete comercios[codigo]
 }
