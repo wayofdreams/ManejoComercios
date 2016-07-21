@@ -1,315 +1,199 @@
-<!DOCTYPE html>
-<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
-<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-        <title></title>
-        <meta name="description" content="">
-        <meta name="viewport" content="width=device-width">
-        <style>
-      	html, body {
-        	height: 100%;
-        	margin: 0;
-        	padding: 0;
-      	}
-      	#map {
-        	height: 50%;
-        	width: 50%;
-      	}
-      	/* The Modal (background) */
-      	.modal {
-      	    display: none; /* Hidden by default */
-      	    position: fixed; /* Stay in place */
-      	    z-index: 1; /* Sit on top */
-      	    padding-top: 100px; /* Location of the box */
-      	    left: 0;
-      	    top: 0;
-      	    width: 100%; /* Full width */
-      	    height: 100%; /* Full height */
-      	    overflow: auto; /* Enable scroll if needed */
-      	    background-color: rgb(0,0,0); /* Fallback color */
-      	    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
-      	}
-
-      	/* Modal Content */
-      	.modal-content {
-      	    position: relative;
-      	    background-color: #fefefe;
-      	    margin: auto;
-      	    padding: 0;
-      	    border: 1px solid #888;
-      	    width: 80%;
-      	    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
-      	    -webkit-animation-name: animatetop;
-      	    -webkit-animation-duration: 0.4s;
-      	    animation-name: animatetop;
-      	    animation-duration: 0.4s
-      	}
-
-      	/* Add Animation */
-      	@-webkit-keyframes animatetop {
-      	    from {top:-300px; opacity:0}
-      	    to {top:0; opacity:1}
-      	}
-
-      	@keyframes animatetop {
-      	    from {top:-300px; opacity:0}
-      	    to {top:0; opacity:1}
-      	}
-
-      	/* The Close Button */
-      	.close {
-      	    color: white;
-      	    float: right;
-      	    font-size: 28px;
-      	    font-weight: bold;
-      	}
-
-      	.close:hover,
-      	.close:focus {
-      	    color: #000;
-      	    text-decoration: none;
-      	    cursor: pointer;
-      	}
-
-      	.modal-header {
-      	    padding: 2px 16px;
-      	    background-color: #5cb85c;
-      	    color: white;
-      	}
-
-      	.modal-body {padding: 2px 16px;}
-
-      	.modal-footer {
-      	    padding: 2px 16px;
-      	    background-color: #5cb85c;
-      	    color: white;
-      	}
-    	</style>
-
-    	<script src=js/ComercioModal.js></script>
-    	
-    </head>
-    <body>
-    	<div class="container comerciosContainer">
-    	    <div id="areaContainer" class="row"></div>
-    	      <div class="row">
-    	        <div class="col-md-12">
-    	          <table class="table table-bordered" id="comerciosTable">
-    	            <thead><tr><th>Nombre</th><th>Codigo</th><th>Descripcion</th><th>Ubicacion</th><th>Acciones</th></tr></thead>
-    	            <tbody id="comerciosTableBody"></tbody>
-    	          </table>
-    	        </div>
-    	      </div>
-    	      <div class="row">
-    	        <div class="col-md-12">
-    	        	<button id="AgregarBtn">Agregar Comercio</button>
-    	             <!-- Button trigger modal -
-    	          <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="ComercioModal">
-    	            Create comercio
-    	          </button>
-    	          -->
-    	        </div>
-    	      </div>
-    	        
-    	        <div class="row">
-    	            <div id="map2" class="" style="width: 100%; height: 300px"></div>
-    	        </div>
-    	</div>
-
-    	<div id="map"></div>
-
-        <!-- The Modal -->
-        <div id="ComercioModal" class="modal">
-        	<!-- Modal content -->
-        	<div class="modal-content">
-        	  <div class="modal-header">
-        	    <span class="close">×</span>
-        	    <h2>Agregar/Editar Comercio</h2>
-        	  </div>
-        	  <div class="modal-body">
-        	    <div class="container-fluid">
-        	        <div class="row">
-        	            <div id="map" class="" style="width: 100%; height: 300px"></div>
-        	        </div>
-        	        
-        	        <label for="exampleInputEmail1">Nombre:</label>
-        	          <input type="test" class="form-control" id="inputNombre" placeholder="Nombre">
-        	        
-        	        <label for="exampleInputPassword1">Código:</label>
-        	          <input type="text" class="form-control" id="inputCodigo" placeholder="Codigo">
-        	        
-        	        <label for="exampleInputPassword1">Descripción:</label>
-        	          <input type="text" class="form-control" id="inputDescripcion" placeholder="Descripcion">
-        	        
-        	        <label id="latLng" for="exampleInputFile">lat: lng:</label>
-        	    </div>
-        	  </div>
-        	  <div class="modal-footer">
-        	    <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-        	    <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="saveClickEvent()">Guardar</button>
-        	  </div>
-        	</div>
-        </div>
-
-        <script>
-        var myLatlng = {lat: 18.461917, lng: -69.930672};
+<!DOCKTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/main.css">
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+    <script>
         var globalMap;
         function initMap() {
-        // Create a map object and specify the DOM element for display.
-        var map = new google.maps.Map(document.getElementById('map'), {
-        center: myLatlng,
-        scrollwheel: true,
-        zoom: 8
-        });
-        
-        var map2 = new google.maps.Map(document.getElementById('map2'), {
-        	zoom: 5,
-        	center: myLatlng,
-        	mapTypeId: google.maps.MapTypeId.TERRAIN
-        });
-        
+        	var myLatlng = {lat: 18.461917, lng: -69.930672};
+          // Create a map object and specify the DOM element for display.
+        	var map = new google.maps.Map(document.getElementById('map'), {
+            center: myLatlng,
+            scrollwheel: false,
+            zoom: 15
+          });
+            
+          var map2 = new google.maps.Map(document.getElementById('map2'), {
+              zoom: 15,
+              center: myLatlng,
+              mapTypeId: google.maps.MapTypeId.TERRAIN
+            });
+            
         globalMap = map2; 
 
-        google.maps.event.addListener(map, "click", function(evt) {
-        	// When the map is clicked, pass the LatLng obect to the measureAdd function
-        	document.getElementById("latLng").innerHTML = "Ubicacion: lat: " + evt.latLng.lat() + " lng: " + evt.latLng.lng();
-        	tempLat = evt.latLng.lat();
-        	tempLng = evt.latLng.lng();
-        });
+          google.maps.event.addListener(map, "click", function(evt) {
+              // When the map is clicked, pass the LatLng obect to the measureAdd function
+              document.getElementById("latLng").innerHTML = "Ubicacion: lat: " + evt.latLng.lat() + " lng: " + evt.latLng.lng();
+              tempLat = evt.latLng.lat();
+              tempLng = evt.latLng.lng();
+          });
         }
-    	</script>
+    </script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAVNE9sptlriRty1HEF6kLBYLGvCVV7zcE&callback=initMap&libraries=geometry" async defer>
+        
+    </script>
+    <script src="js/Model.js"></script>
+    <script src=js/ComercioModal.js></script>
+</head>
+    
+<body>
+    <div class="container comerciosContainer">
+        <div id="areaContainer" class="row">
+            
+    </div>
+    <div class="row">
+            <div class="col-md-6">
+                <table id="comerciosTable">
+                  <thead><tr><th>Nombre</th><th>Codigo</th><th>Descripcion</th><th>Ubicacion</th><th>Acciones</th></tr></thead>
+                  <tbody id="comerciosTableBody"></tbody>
+                </table>
+            </div>
+        	<div class="col-md-6">
+            <div id="map2" class="" style="width: 100%; height: 300px"></div>
+            </div>
+    </div>
+        
+      <div class="row">
+        <div class="col-md-12">
+             <!-- Button trigger modal -->
+          <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#comercioModal">
+            Agregar comercio
+          </button>
+        </div>
+      </div>
+        
+    </div>
+    
+ 
 
-        <script>
+<!-- Modal -->
+<div class="modal fade" id="comercioModal" tabindex="-1" role="dialog" aria-labelledby="comercioModalLabel" >
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="comercioModalLabel">Modal title</h4>
+      </div>
+      <div class="modal-body">
+        <div class="container-fluid">
+            <div class="row">
+                <div id="map" class="" style="width: 100%; height: 300px"></div>
+            </div>
+            
+            <label for="exampleInputEmail1">Nombre</label>
+              <input type="test" class="form-control" id="inputNombre" placeholder="Nombre">
+            
+            <label for="exampleInputPassword1">Codigo</label>
+              <input type="text" class="form-control" id="inputCodigo" placeholder="Codigo">
+            
+            <label for="exampleInputPassword1">Descripcion</label>
+              <input type="text" class="form-control" id="inputDescripcion" placeholder="Descripcion">
+            
+            <label id="latLng" for="exampleInputFile">lat: lng:</label>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="saveClickEvent()">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
 
-		var map;
-		function initMap() {
-			var myLatlng = {lat: -25.363, lng: 131.044};
-  			map = new google.maps.Map(document.getElementById('map'), {
-    			center: {lat: 18.461917, lng: -69.930672},
-    			zoom: 18
-  			});
-  			map.addListener('click', function(e) {
-    			placeMarkerAndPanTo(e.latLng, map);
-  			});
-		}
+<script>
+function editComercioClickEvent(codigo){
+    populateModal(codigo);
+    $('#comercioModal').modal('show');
+}
+    
+function deleteComercioClickEvent(codigo){
+    deleteComercio(codigo);
+    updateCommerciosTable();
+}
 
-		function placeMarkerAndPanTo(latLng, map) {
-		  var marker = new google.maps.Marker({
-		    position: latLng,
-		    map: map
-		  });
-		  map.panTo(latLng);
-		}
+function saveClickEvent(){
+    saveComercio();
+    updateCommerciosTable();
+}
+    
+    
+//To fix grey map
+function resizeMap() {
+   if(typeof map =="undefined") return;
+   setTimeout( resizingMap , 400);
+}
 
-    	</script>
-    	
-		<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAIhXvjzZf4SR68uCq9D2_VBE89bFqg_8g&callback=initMap"
-        	async defer></script>
+function resizingMap() {
+   if(typeof map =="undefined") return;
+   var center = map.getCenter;
+   google.maps.event.trigger(map, "resize");
+   map.setCenter = center; 
+}
 
-        <p>Hello world! This is HTML5 Boilerplate.</p>
-        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
-   
-        <script >
-            function download(text, name, type) {
-              var fileSaver = document.getElementById("fileSaver");
-              var file = new Blob([text], {type: type});
-              fileSaver.href = URL.createObjectURL(file);
-              fileSaver.download = name;
-            }
-        </script>
-        <a href="" id="fileSaver">Guardar comercios</a>
-        <button onclick="download('file text', 'myfilename.txt', 'text/plain')">Create file</button>
+$('#comercioModal').on('show.bs.modal', function() {
+   //Must wait until the render of the modal appear, thats why we use the resizeMap and NOT resizingMap!! ;-)
+   resizeMap();
+})
+//----
 
-        <script >
-            // Get the modal
-            var modal = document.getElementById('ComercioModal');
+function updateCommerciosTable(){
+  var table = document.getElementById("comerciosTableBody");
+    table.innerHTML = "";
 
-            // Get the button that opens the modal
-            var btn = document.getElementById("AgregarBtn");
-
-            // Get the <span> element that closes the modal
-            var span = document.getElementsByClassName("close")[0];
-
-            // When the user clicks on the button, open the modal 
-            btn.onclick = function() {
-                modal.style.display = "block";
-            }
-
-            // When the user clicks on <span> (x), close the modal
-            span.onclick = function() {
-                modal.style.display = "none";
-            }
-
-            // When the user clicks anywhere outside of the modal, close it
-            window.onclick = function(event) {
-                if (event.target == modal) {
-                    modal.style.display = "none";
-                }
-            }
-
-
-            function editComercioClickEvent(codigo){
-                sleep(1000);
-                populateModal(codigo);
-                modal.modal('show');
-            }
-                
-            function deleteComercioClickEvent(codigo){
-                deleteComercio(codigo);
-                updateCommerciosTable();
-            }
-
-            function saveClickEvent(){
-                saveComercio();
-                updateCommerciosTable();
-            }
-
-            function resizingMap() {
-               if(typeof map =="undefined") return;
-               var center = map.getCenter;
-               google.maps.event.trigger(map, "resize");
-               map.setCenter = center; 
-            }
-
-            modal.on('show.bs.modal', function() {
-               //Must wait until the render of the modal appear, thats why we use the resizeMap and NOT resizingMap!! ;-)
-               resizeMap();
-            })
-
-            function updateCommerciosTable(){
-              var table = document.getElementById("comerciosTableBody");
-                table.innerHTML = "";
-
-              for(codigo in getComercios()){
-                comercio = getComercios()[codigo];
-                var nombre = document.createElement("td");
-                nombre.innerHTML = comercio["nombre"];
-                var codigo = document.createElement("td");
-                codigo.innerHTML = comercio["codigo"];
-                var descripcion = document.createElement("td");
-                descripcion.innerHTML = comercio["descripcion"];
-                var ubicacion = document.createElement("td");
-                ubicacion.innerHTML = "lat: " + comercio["ubicacion"]["lat"] + ", lng: " + comercio["ubicacion"]["lng"];
-                var acciones = document.createElement("td");
-                acciones.innerHTML = '<button type="button" class="btn btn-default" aria-label="Left Align" onclick="deleteComercioClickEvent(\'' + comercio["codigo"] + '\')" ><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button><button type="button" class="btn btn-default" aria-label="Left Align" onclick="editComercioClickEvent(\'' + comercio["codigo"] + '\')" ><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></button>'
+  for(codigo in getComercios()){
+    comercio = getComercios()[codigo];
+    var nombre = document.createElement("td");
+    nombre.innerHTML = comercio["nombre"];
+    var codigo = document.createElement("td");
+    codigo.innerHTML = comercio["codigo"];
+    var descripcion = document.createElement("td");
+    descripcion.innerHTML = comercio["descripcion"];
+    var ubicacion = document.createElement("td");
+    ubicacion.innerHTML = "lat: " + comercio["ubicacion"]["lat"] + ", lng: " + comercio["ubicacion"]["lng"];
+    var acciones = document.createElement("td");
+    acciones.innerHTML = '<button type="button" class="btn btn-default" aria-label="Left Align" onclick="deleteComercioClickEvent(\'' + comercio["codigo"] + '\')" ><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button><button type="button" class="btn btn-default" aria-label="Left Align" onclick="editComercioClickEvent(\'' + comercio["codigo"] + '\')" ><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></button>'
 
 
-                var row = document.createElement("tr");
+    var row = document.createElement("tr");
 
-                row.appendChild(nombre);
-                row.appendChild(codigo);
-                row.appendChild(descripcion);
-                row.appendChild(ubicacion);
-                row.appendChild(acciones);
+    row.appendChild(nombre);
+    row.appendChild(codigo);
+    row.appendChild(descripcion);
+    row.appendChild(ubicacion);
+    row.appendChild(acciones);
 
-                table.appendChild(row);
-              }
-        </script>
+    table.appendChild(row);
+  }
+    initMap();
+    if(Object.keys(comercios).length >= 3){
         
         
-    </body>
+        var googleLatLngObject = [];
+        for(codigo in comercios){
+            googleLatLngObject.push(new google.maps.LatLng(comercios[codigo]["ubicacion"]["lat"], comercios[codigo]["ubicacion"]["lng"]));
+        }
+        
+        var polygon = new google.maps.Polygon({
+            paths: googleLatLngObject
+        });
+                         
+        var area = google.maps.geometry.spherical.computeArea(polygon.getPath());
+        var areaContainer = document.getElementById("areaContainer");
+        areaContainer.innerHTML = "<h1>Area: " + area + "</h1>";
+        polygon.setMap(globalMap);
+    }
+}
+    
+addComercio("Estacion Centro de los Heroes, L1",	"Tren0001", "Transporte publico.",	     {"lat": 18.450606087286637,     "lng": -69.92767810821533});	
+addComercio("OMSA - Corredor Independencia",	    "Autobus0001", "Transporte publico.",	  	                     {"lat": 18.456061054909103,    "lng": -69.92521047592163});	
+addComercio("Plaza Lama S.A",      "Tienda0001", "Centro comercial.",	 {"lat": 18.461434435641216,     "lng": -69.93619680404663});	
+addComercio("El Meson de la Cava",	    "Tienda0002", "Restaurante.",	                     {"lat": 18.452987568346295,     "lng": -69.93321418762207});
+updateCommerciosTable();
+
+</script>
 </html>
